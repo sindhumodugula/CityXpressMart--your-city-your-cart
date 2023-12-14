@@ -1,0 +1,63 @@
+{% if 'role' in session and session['role'] == 'Admin': %} {% include "admin-head.html" %} {%elif 'role' in session and
+session['role'] == 'Delivery' %} {% include "delivery-head.html" %} {%elif 'role' in session and session['role'] ==
+'Customer' %} {% include "customer-head.html" %} {%else%} {% include 'header.html'%} {%endif%}
+
+<section id="hero" style="height: 70vh">
+    {% if 'role' in session and session['role'] == 'Admin': %}
+    <div>
+        <h3>Add and View Store</h3>
+    </div>
+    <section id="newsletter" class="section-p1 section-m1" style="justify-content: center; width: 80%">
+        <form class="form" action="/add-store" method="POST">
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section">
+                    <label for="name">Store Name</label>
+                    <input type="text" name="name" placeholder="Store Name" />
+                </div>
+                <div class="input-section">
+                    <label for="street">Street</label>
+                    <input type="text" name="street" placeholder="Street Address" />
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section">
+                    <label for="location">City</label>
+                    <input type="text" name="location" placeholder="City" />
+                </div>
+                <div class="input-section">
+                    <label for="Zipcode">Zipcode</label>
+                    <input type="text" pattern="\d{5}" maxlength="5" name="zip_code" placeholder="Zipcode" />
+                </div>
+            </div>
+            <button type="submit" class="normal">Add Store</button>
+        </form>
+    </section>
+    {%else%}
+    <h2>view stores</h2>
+    {%endif%}
+    
+</section>
+
+<section id="cart" class="section-p1" style="display: flex; justify-content: center; margin-bottom: 100px">
+    <table width="100%" style="width: 50%">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Location</td>
+                <td>Address</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {%for store in stores: %}
+            <tr>
+                <td>{{store['name']}}</td>
+                <td>{{store['location']}}</td>
+                <td>{{store['street']}}, {{store['zip_code']}}</td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</section>
+
+{% include "footer.html" %}

@@ -1,0 +1,153 @@
+{% include "customer-head.html" %}
+
+<section
+    id="page-header"
+    class="about-header"
+    style="background-image: url('../static/img/cart_image.jpeg'); height: 30vh"
+>
+    <h2>#cart</h2>
+    <p>Add your coupon code & SAVE upto 70%!</p>
+</section>
+
+<section id="cart" class="section-p1" style="margin-bottom: 0px">
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Remove</td>
+                <td>Product</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Subtotal</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product_in_cart in products_in_cart %} {% set product =
+            get_product_by_product_id(product_in_cart['product_id']) %}
+            <tr>
+                <td>
+                    <a href="/remove?product_id={{product['_id']}}&order_id={{order['_id']}}"
+                        ><i class="far fa-times-circle"></i
+                    ></a>
+                </td>
+                <td><img src="../static/img/{{product['picture']}}" alt="" /></td>
+                <td>
+                    {{product['name']}}<br />
+                    brand: {{product['brand']}}
+                </td>
+                <td>${{product['price']}}</td>
+                <td>
+                    <input
+                        type="number"
+                        value="{{product_in_cart['quantity']}}"
+                        data-product-id="{{product['_id']}}"
+                        data-order-id="{{order['_id']}}"
+                    />
+                </td>
+                <td>{{product['price'] | int * product_in_cart['quantity'] | int}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</section>
+
+<section id="cart-add" class="section-p1" style="justify-content: space-around">
+    <div id="subtotal" style="width: 40%">
+        <h3>Select Delivery Type</h3>
+        <div id="newsletter" style="background-color: inherit; flex-direction: column">
+            <form
+                class="form"
+                action="cart"
+                style="flex-direction: row; justify-content: center; width: 100%; margin-bottom: 10px"
+            >
+                <div class="input-section" style="border: 1px solid black; border-radius: 4px; width: 60%">
+                    <select name="del_type" id="">
+                        <option selected value="Delivery">Xpress Delivery(Default)</option>
+                        <option value="Pickup">Pickup</option>
+                    </select>
+                </div>
+                <button class="normal" style="width: 40%">Confirm Choice</button>
+            </form>
+            <div class="form" style="display: flex; flex-direction: row; justify-content: flex-start; width: 100%">
+                <label style="width: 30%; align-self: center" for="selected_type">Selected : </label>
+                <input type="text" id="selected_type" readonly value="{{delivery_type}}" />
+            </div>
+        </div>
+    </div>
+    <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+            <tr>
+                <td>Cart Subtotal</td>
+                <td>$ {{subtotal}}</td>
+            </tr>
+            {% if delivery_type == "Delivery"%}
+            <tr>
+                <td>Delivery Shipping Fee</td>
+                <td>
+                    {% if delivery_fee == 0 %} Free <strike>$ 5</strike>
+                    {%else%}$ {{delivery_fee}}{%endif%}
+                </td>
+            </tr>
+            {%endif%}
+            <tr>
+                <td>Tax - 8%</td>
+                <td>$ {{tax}}</td>
+            </tr>
+            <tr>
+                <td><strong>Total(including other tax)</strong></td>
+                <td><strong>$ {{total}}</strong></td>
+            </tr>
+        </table>
+
+        <form action="/payment-gateway" class="form">
+            <input type="hidden" name="order_id" value="{{order['_id']}}" />
+            <input type="hidden" name="amount" value="{{total}}" />
+            <input type="hidden" name="subtotal" value="{{subtotal}}" />
+            <input type="hidden" name="del_type" value="{{delivery_type | default('Delivery')}}" />
+            <div id="newsletter" style="background: inherit">
+                <div class="form" style="flex-direction: row; width: 100%">
+                    {%if delivery_type == 'Pickup'%}
+                    <div class="input-section" style="border: 1px solid black; border-radius: 4px; width: 60%">
+                        <select name="pickup_location" required>
+                            <option value="">Select Pickup Location</option>
+                            {%for store in stores:%}
+                            <option value="{{store['_id']}}">{{store['location']}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    {%endif%}
+                    <button style="justify-self: flex-end" type="submit" class="normal">Proceed to payment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% include "footer.html" %}
+<script>
+    // Add event listeners to all quantity input fields
+    const quantityInputs = document.querySelectorAll('input[type="number"]')
+    quantityInputs.forEach((input) => {
+        input.addEventListener('change', updateSubtotal)
+    })
+
+    function updateSubtotal(event) {
+        const product_id = event.target.dataset.productId
+        const order_id = event.target.dataset.orderId
+        const quantity = event.target.value
+        console.log(product_id, order_id)
+        if (quantity == 0) {
+            const redirectUrl = `/remove?product_id=${encodeURIComponent(product_id)}&order_id=${order_id}`
+            window.location.href = redirectUrl
+        } else {
+            const redirectUrl = `/add-to-cart?product_id=${encodeURIComponent(
+                product_id
+            )}&qty=${quantity}&operation=qty`
+            window.location.href = redirectUrl
+        }
+
+        // You can perform any additional logic or update the total here if needed
+    }
+</script>

@@ -1,0 +1,53 @@
+<footer class="section-p1">
+    <div class="col">
+        <div id="logo" style="border-bottom: none">
+            <div id="logo-text" style="align-self: inherit">CityXpressMart</div>
+            <img src="../static/img/delivery.png" class="logo" alt="" />
+        </div>
+        <h4>Contact</h4>
+        <p><strong>Address: </strong> CityXpressMart Main St</p>
+        <p><strong>Phone:</strong> +01 2222 365 /(+1) 01 2345 6789</p>
+        <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-pinterest-p"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col install">
+        <h4>Install App</h4>
+        <p>From App Store or Google Play</p>
+        <div class="row">
+            <img src="../static/img/pay/app.jpg" alt="" />
+            <img src="../static/img/pay/play.jpg" alt="" />
+        </div>
+        <p>Secured Payment Gateways</p>
+        <img src="../static/img/pay/pay.png" alt="" />
+    </div>
+
+    <div class="copyright">
+        <p>© 2023, UCM ADB Project Group 8</p>
+    </div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toast = document.querySelector('.toast')
+        const closeIcon = document.querySelector('.close')
+
+        if (toast) {
+            setTimeout(() => {
+                toast.classList.remove('active')
+            }, 3000) // 1s = 1000 ms
+
+            closeIcon.addEventListener('click', () => {
+                toast.classList.remove('active')
+            })
+        }
+    })
+</script>

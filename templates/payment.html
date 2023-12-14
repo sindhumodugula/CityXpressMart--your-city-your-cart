@@ -1,0 +1,70 @@
+{% include "customer-head.html" %}
+
+<section id="hero" style="height: 90vh">
+    <div>
+        <h3>Payment</h3>
+    </div>
+    <section id="newsletter" class="section-p1 section-m1" style="justify-content: center; width: 80%">
+        <form class="form" action="/payment-verification" method="POST">
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section">
+                    <label for="name">Card Holder Name</label>
+                    <input required type="text" pattern="[A-Za-z ]+" name="card_name" placeholder="Holder Name" />
+                </div>
+                <div class="input-section">
+                    <label for="expiry">Expiry</label>
+                    <input required type="text" pattern="\d{2}/\d{2}" name="expiry" placeholder="MM/YY" />
+                </div>
+            </div>
+            {%if del_type and del_type == 'Delivery':%}
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section" style="width: 100%">
+                    <label for="address">Delivery Address</label>
+                    <input required type="text" name="address" placeholder="Delivery Address" />
+                </div>
+            </div>
+            {%endif%}
+            <div style="display: flex; flex-direction: row; gap: 5px; justify-content: center">
+                <div class="input-section" style="width: 100%">
+                    <label for="card_number">Card Number</label>
+                    <input
+                        type="text"
+                        maxlength="16"
+                        pattern="\d{16}"
+                        name="card_number"
+                        placeholder="XXXX-XXXX-XXXX-XXXX"
+                        required
+                    />
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 5px; justify-content: center">
+                <div class="input-section">
+                    <select name="payment_type" required>
+                        <option value="">Select Payment Type</option>
+                        <option value="debit">Debit</option>
+                        <option value="credit">Credit</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 5px; justify-content: space-between">
+                <div class="input-section">
+                    <label for="amount">Total Amount</label>
+                    <input type="number" name="amount" value="{{amount}}" readonly style="color: black" />
+                </div>
+                <div class="input-section">
+                    <label for="cvv">CVV</label>
+                    <input type="password" required pattern="\d{3}" maxlength="3" name="cvv" placeholder="CVV" />
+                </div>
+            </div>
+            <input type="hidden" name="subtotal" value="{{subtotal}}" />
+            <input type="hidden" name="order_id" value="{{order_id}}" />
+            <input type="hidden" name="delivery_type" value="{{del_type}}" />
+            {% if del_type == 'Pickup'%}
+            <input type="hidden" name="pickup_location" value="{{pickup_location}}" />
+            {%endif%}
+            <button class="normal">Pay Now</button>
+        </form>
+    </section>
+</section>
+
+{% include "footer.html" %}

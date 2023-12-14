@@ -1,0 +1,80 @@
+{% include "header.html" %}
+
+<section id="hero" style="height: 90vh">
+    <div>
+        <h3>Create Xpress Account</h3>
+    </div>
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For CityXpressMart</h4>
+            <p>Get into the world of <span>Xpress delivery</span></p>
+        </div>
+        <form class="form" action="login-verify" method="POST">
+            <input type="hidden" name="role" value="NewCustomer" />
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" placeholder="Enter Name" value="{{ name | default('')}}" required />
+                </div>
+                <div class="input-section">
+                    <label for="email">Email</label>
+                    <input
+                        type="text"
+                        name="email"
+                        value="{{ email | default('')}}"
+                        placeholder="Enter Email"
+                        required
+                    />
+                </div>
+                <div class="input-section">
+                    <label for="phone">Phone</label>
+                    <input
+                        type="text"
+                        pattern="\d{10}"
+                        maxlength="10"
+                        name="phone"
+                        value="{{ phone | default('')}}"
+                        placeholder="Enter Phone"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="input-section">
+                <label for="address">Address</label>
+                <input
+                    type="text"
+                    name="address"
+                    value="{{ address | default('')}}"
+                    placeholder="Enter Address"
+                    required
+                />
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section" style="width: 50%">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value="{{ password | default('')}}"
+                        placeholder="Enter Password"
+                        required
+                    />
+                </div>
+                <div class="input-section" style="width: 50%">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input
+                        type="password"
+                        name="confirm-password"
+                        value="{{ password | default('')}}"
+                        placeholder="Enter Password"
+                        required
+                    />
+                </div>
+            </div>
+
+            <button type="submit" class="normal">Sign Up</button>
+        </form>
+    </section>
+</section>
+
+{% include "footer.html" %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CityXpressMart</title>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+        <link rel="stylesheet" href="../static/css/style.css" /></head
+    >{% if session['login_count'] == 1 %}
+    <div class="toast active" style="z-index: 999">
+        <div class="toast-content">
+            <i class="fas fa-solid fa-check check"></i>
+            <div class="message">
+                <span class="text text-1"></span>
+                <span class="text text-2">Login Successful</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <!-- <div class="progress"></div> -->
+    </div>
+    {%endif%} {%if message%} {% include "toast.html" %} {%endif%}
+
+    <body>
+        <section id="header">
+            <div id="logo">
+                <a href="/">
+                    <div id="logo-text">CityXpressMart</div>
+                </a>
+
+                <img src="../static/img/delivery.png" class="logo" alt="" />
+            </div>
+
+            <div>
+                <ul id="navbar">
+                    <li><a class="active" href="/">Home</a></li>
+                    <li><a href="/login">login</a></li>
+                    <li id="lg-bag">
+                        <a href="/cart"><i class="far fa-shopping-bag"></i></a>
+                    </li>
+                    <a href="#" id="close"><i class="far fa-times"></i></a>
+                </ul>
+            </div>
+            <div id="mobile">
+                <a href="/cart"><i class="far fa-shopping-bag"></i></a>
+                <i id="bar" class="fas fa-outdent"></i>
+            </div>
+        </section>
+    </body>
+</html>

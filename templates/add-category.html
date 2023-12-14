@@ -1,0 +1,36 @@
+{% include "admin-head.html" %}
+
+<section id="hero" style="height: 50vh">
+    <div>
+        <h3>Add Cateogry</h3>
+    </div>
+    <section id="newsletter" class="section-p1 section-m1" style="justify-content: center; width: 80%">
+        <form class="form" action="/add-category" method="POST">
+            <div class="input-section">
+                <label for="name">Category Name</label>
+                <input type="text" name="name" placeholder="Enter Name" />
+            </div>
+            <button type="submit" class="normal">Add Category</button>
+        </form>
+    </section>
+</section>
+
+<section id="cart" class="section-p1" style="display: flex; justify-content: center; margin-bottom: 100px">
+    <table width="100%" style="width: 50%">
+        <thead>
+            <tr>
+                <td>Category Name</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {%for category in categories: %}
+            <tr>
+                <td>{{category['name']}}</td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</section>
+
+{% include "footer.html" %}

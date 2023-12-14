@@ -1,0 +1,35 @@
+{% include "header.html" %}
+
+<section id="hero" style="height: 90vh">
+    <div>
+        <h3>Login to Xpress</h3>
+    </div>
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Login to CityXpressMart</h4>
+            <p>Get into the world of <span>Xpress delivery</span></p>
+            <p>
+                Haven't signed up yet ? <br /><span><a class="span" href="/sign-up">Click to Register Now!!</a></span>
+            </p>
+            <p>
+                <span><a class="span" href="/admin-login">Admin Login</a></span
+                >&nbsp;&nbsp;
+                <span><a class="span" href="/delivery-login">Delivery Login</a></span>
+            </p>
+        </div>
+        <form class="form" action="login-verify" method="POST">
+            <input type="hidden" name="role" value="Customer" />
+            <div class="input-section">
+                <label for="email">Username</label>
+                <input type="text" name="email" value="{{ username | default('')}}" placeholder="Enter Username" />
+            </div>
+            <div class="input-section">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter Password" />
+            </div>
+            <button type="submit" class="normal">Login</button>
+        </form>
+    </section>
+</section>
+
+{% include "footer.html" %}

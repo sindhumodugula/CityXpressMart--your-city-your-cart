@@ -1,0 +1,50 @@
+{% include "header.html" %} {%if message%} {% include "toast.html" %} {%endif%}
+<section id="hero" style="height: 45vh">
+    <h4>Xpress</h4>
+    <h2>Super value deals</h2>
+    <h1>On all products</h1>
+    <p>Save on delivery charges, and get free delivery on orders above $49</p>
+    <button>Shop Now</button>
+</section>
+
+<section id="product1" class="section-p1">
+    <h2>Featured Products</h2>
+    <p>Save on delivery charges, and get free delivery on orders above $49</p>
+    <div class="pro-container">
+        {% for product in products:%}
+        <div class="pro">
+            <div style="min-height: 300px; display: flex; align-items: center; justify-content: center">
+                <a href="#">
+                    <img src="../static/img/{{product['picture']}}" alt="" />
+                </a>
+            </div>
+
+            <div class="des">
+                <span
+                    >{{product['brand']}} |
+                    <i class="fas fa-map-marker-alt"></i> {{getStoreNameById(product['store_id'])}}
+                </span>
+                <h5>{{product['name']}}</h5>
+                <h4>{{product['amount']}}</h4>
+            </div>
+
+            {% if is_product_in_cart(product['_id'])%}
+            <a href="#" class="cart" style="color: #e8f6ea; background-color: #088178; pointer-events: none">
+                <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px">
+                    <i class="fal fa-shopping-cart"></i>
+                </div>
+            </a>
+            <span style="color: lightcoral">Added to cart!</span>
+            {%else%}
+            <a href="/add-to-cart?product_id={{product['_id']}}&qty=1" class="cart">
+                <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px">
+                    <i class="fal fa-shopping-cart"></i>
+                </div>
+            </a>
+            {%endif%}
+        </div>
+        {%endfor%}
+    </div>
+</section>
+
+{% include "footer.html" %}

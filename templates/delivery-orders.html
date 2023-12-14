@@ -1,0 +1,66 @@
+{% include "delivery-head.html" %}{% if session['login_count'] == 1 %}
+<div class="toast active" style="z-index: 999">
+    <div class="toast-content">
+        <i class="fas fa-solid fa-check check"></i>
+        <div class="message">
+            <span class="text text-1"></span>
+            <span class="text text-2">Login Successful</span>
+        </div>
+    </div>
+    <i class="fa-solid fa-xmark close"></i>
+    <!-- <div class="progress"></div> -->
+</div>
+{%endif%} {%if message%} {% include "toast.html" %} {%endif%}
+
+<section id="hero" style="height: 30vh">
+    <h2>Xpress</h2>
+    <h1>Welcome to Xpress Delivery Management</h1>
+    <h3>Deliver</h3>
+</section>
+
+<section id="cart" class="section-p1">
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Item</td>
+                <td>Order Id</td>
+                <td>Status</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{getUpperIdFromOrderId(order['_id'])}}</td>
+                <td>{{order['status']}}</td>
+                <td>
+                    {%if order['status'] == 'assigned'%}
+                    <div>
+                        <div class="form">
+                            <div class="input-section" style="border: 1px solid darkgreen">
+                                <a href="/delivery-order?order_id={{order['_id']}}&action=picked_package">
+                                    <button style="padding: 5px 20px" class="normal">Pickup</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {%elif order['status'] == 'out for delivery'%}
+                    <div>
+                        <div class="form">
+                            <div class="input-section" style="border: 1px solid darkgreen">
+                                <a href="/delivery-order?order_id={{order['_id']}}&action=delivered">
+                                    <button style="padding: 5px 20px" class="normal">Update as Delivered</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</section>
+{% include "footer.html" %}

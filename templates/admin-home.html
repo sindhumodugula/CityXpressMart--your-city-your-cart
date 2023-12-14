@@ -1,0 +1,21 @@
+{% include "admin-head.html" %}{% if session['login_count'] == 1 %}
+<div class="toast active" style="z-index: 999">
+    <div class="toast-content">
+        <i class="fas fa-solid fa-check check"></i>
+        <div class="message">
+            <span class="text text-1"></span>
+            <span class="text text-2">Login Successful!</span>
+        </div>
+    </div>
+    <i class="fa-solid fa-xmark close"></i>
+    <!-- <div class="progress"></div> -->
+</div>
+{%endif%} {%if message%} {% include "toast.html" %} {%endif%}
+
+<section id="hero" style="height: 90vh">
+    <h2>Xpress</h2>
+    <h1>Welcome to Xpress Admin Management</h1>
+    <h3>Administrate</h3>
+</section>
+
+{% include "footer.html" %}

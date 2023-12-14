@@ -1,0 +1,67 @@
+{% include "admin-head.html" %}
+
+<section id="hero" style="height: 80vh">
+    <div>
+        <h3>Add Delivery Agent</h3>
+    </div>
+    <section id="newsletter" class="section-p1 section-m1" style="justify-content: center; width: 80%">
+        <form class="form" action="/add-delivery" method="POST">
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" placeholder="Enter Name" />
+                </div>
+                <div class="input-section">
+                    <label for="phone">Phone</label>
+                    <input type="number" name="phone" placeholder="Enter Phone No." />
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 5px">
+                <div class="input-section">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" placeholder="Enter Email" />
+                </div>
+                <div class="input-section">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Enter Password" />
+                </div>
+            </div>
+            <div class="input-section">
+                <label for="address">Address</label>
+                <input type="text" name="address" placeholder="Enter Address" />
+            </div>
+            <button type="submit" class="normal">Add Delivery Agent</button>
+        </form>
+    </section>
+</section>
+
+<section id="cart" class="section-p1">
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Remove</td>
+                <td>Agent Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Address</td>
+            </tr>
+        </thead>
+        <tbody>
+            {%for delivery in delivery_agents%}
+            <tr>
+                <td>
+                    <a href="/remove-delivery-agent?delivery_id={{delivery['_id']}}"
+                        ><i class="far fa-times-circle"></i
+                    ></a>
+                </td>
+                <td>{{delivery['name']}}</td>
+                <td>{{delivery['email']}}</td>
+                <td>{{delivery['phone']}}</td>
+                <td>{{delivery['address']}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</section>
+
+{% include "footer.html" %}

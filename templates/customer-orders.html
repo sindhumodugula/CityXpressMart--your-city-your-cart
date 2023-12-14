@@ -1,0 +1,90 @@
+{% include "customer-head.html" %} {%if message%} {% include "toast.html" %} {%endif%}
+<section
+    id="page-header"
+    class="about-header"
+    style="background-image: url('../static/img/flowers.jpeg'); height: 30vh"
+>
+    <h1 style="color: white">#Orders</h1>
+    <p>Enjoy free shipping on orders above $49</p>
+</section>
+
+{% if orders_count > 0:%} {% for order in orders %}
+<section id="cart" class="section-p1">
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Order Id : <span class="order-head">#{{getUpperIdFromOrderId(order['_id'])}}</span></td>
+                {%if order['delivery_type'] == 'Delivery'%}
+                <td>Receive Method: <span class="order-head">{{order['delivery_type']}}</span></td>
+                {%else%}
+                <td>
+                    Pickup Location:
+                    <span class="order-head"
+                        ><i class="fas fa-map-marker-alt"></i>{{getStoreNameById(order['pickup_location'])}}</span
+                    >
+                </td>
+                {%endif%}
+                <td>Order Date : <span class="order-head">{{order['order_date']}}</span></td>
+                <td>Total : <span class="order-head">{{order['amount']}}</span></td>
+                <td>
+                    Status:
+                    <span class="order-head">
+                        {%if order['status'] == 'rejected'%}
+                        <span style="color: maroon">CANCELLED </span>
+                        {%elif order['status'] == 'assigned' or order['status'] == 'prepared' or order['status'] ==
+                        'accepted' %}
+                        <span style="color: maroon">OUT FOR DELIVERY </span>
+                        {%else%} {{order['status']}} {%endif%}
+                    </span>
+                </td>
+                {%if order['status'] == 'rejected'%}
+                <td>Refund Status: {{order['refund_status']}}</td>
+                {%else%}
+                <td style="display: none"></td>
+                {%endif%}
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr style="display: none">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Item</td>
+                <td>Product</td>
+                <td>Item</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Subtotal</td>
+            </tr>
+        </thead>
+        {% set items = order.get('items',[]) %}
+        <tbody>
+            {%for item in items:%} {% set productInfo = item %} {% set product_id = productInfo['product_id'] %} {% set
+            product = get_product_by_product_id(product_id) %} {%if product:%}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td><img src="../static/img/{{product['picture']}}" alt="" /></td>
+                <td>{{product['name']}}</td>
+                <td>${{product['price']}}</td>
+                <td>{{productInfo['quantity']}}</td>
+                <td>${{product['price'] | int * productInfo['quantity'] | int}}</td>
+            </tr>
+            {%endif%} {%endfor%}
+        </tbody>
+    </table>
+</section>
+{%endfor%} {% else %}
+<section style="display: flex; justify-content: center; height: 30vh; align-items: center">
+    <h2>No Orders Placed yet!</h2>
+</section>
+{% endif %} {% include "footer.html" %}
